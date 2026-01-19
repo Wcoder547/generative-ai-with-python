@@ -1,0 +1,23 @@
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import HumanMessage, SystemMessage,AIMessage
+from dotenv import load_dotenv
+
+load_dotenv()
+
+model=ChatOpenAI(model_name="gpt-4", temperature=0)
+
+chat_history = [
+    SystemMessage(content="You are a helpful assistant."),
+]
+
+while True:
+    user_input=input("User: ")
+    chat_history.append(HumanMessage(content=user_input))
+    if user_input == 'exit':
+        print("Exiting chat.")
+        break
+    result = model.invoke(chat_history)
+    chat_history.append(AIMessage(content=result.content))
+    print("AI:", result.content)
+
+print(chat_history)

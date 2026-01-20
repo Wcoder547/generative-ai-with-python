@@ -1,11 +1,13 @@
 from dotenv import load_dotenv
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_perplexity import ChatPerplexity
 
 load_dotenv()
 
-llm = ChatGoogleGenerativeAI(
-    model="gemini-flash-latest",  
-)
+model = ChatPerplexity(model="sonar-pro", temperature=0.7)
 
-response = llm.invoke("What is LangChain?")
-print(response.content)
+# response = model.invoke("What is LangChain?")
+# print(response.content)
+messages=[{"role":"user","content":"Write a poem about AI"}]
+
+for chunk in model.stream(messages):
+    print(chunk.content)
